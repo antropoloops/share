@@ -47,10 +47,27 @@ class CreateBasicStructure < ActiveRecord::Migration[5.2]
       t.string :name, null: false, uniqueness: true
       t.string :slug, null: false, uniqueness: true
       t.string :readme
+      t.jsonb :logo_data
 
       t.timestamps
     end
     add_index :audiosets, :name, unique: true
+
+    create_table :clips, id: :uuid do |t|
+      t.references :audioset, foreign_key: true, type: :uuid
+      t.string :name
+      t.string :slug
+      t.string :album
+      t.string :year
+      t.string :country
+      t.string :color
+      t.string :keyboard
+      t.float :beats
+      t.float :volume
+      t.float :lng
+      t.float :lat
+      t.timestamps
+    end
   end
 
 end

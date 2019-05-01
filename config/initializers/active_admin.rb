@@ -8,7 +8,7 @@ ActiveAdmin.setup do |config|
   config.logout_link_path = :destroy_admin_user_session_path
 
   config.localize_format = :long
-  config.footer = 'atpls-admin'
+  config.footer = '_a_t_p_l_s_'
 
   config.comments = false
   config.batch_actions = true

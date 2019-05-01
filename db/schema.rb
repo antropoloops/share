@@ -57,9 +57,28 @@ ActiveRecord::Schema.define(version: 2019_05_01_080307) do
     t.string "name", null: false
     t.string "slug", null: false
     t.string "readme"
+    t.jsonb "logo_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_audiosets_on_name", unique: true
+  end
+
+  create_table "clips", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "audioset_id"
+    t.string "name"
+    t.string "slug"
+    t.string "album"
+    t.string "year"
+    t.string "country"
+    t.string "color"
+    t.string "keyboard"
+    t.float "beats"
+    t.float "volume"
+    t.float "lng"
+    t.float "lat"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["audioset_id"], name: "index_clips_on_audioset_id"
   end
 
   create_table "memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -98,6 +117,7 @@ ActiveRecord::Schema.define(version: 2019_05_01_080307) do
 
   add_foreign_key "assets", "spaces"
   add_foreign_key "assets", "users"
+  add_foreign_key "clips", "audiosets"
   add_foreign_key "memberships", "spaces"
   add_foreign_key "memberships", "users"
 end

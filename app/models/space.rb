@@ -6,6 +6,7 @@ class Space < ApplicationRecord
   friendly_id :name, use: :slugged
 
   has_many :memberships, dependent: :destroy
+  has_many :assets, dependent: :destroy
   has_many :users, through: :memberships
 
   validates :name, presence: true, uniqueness: true

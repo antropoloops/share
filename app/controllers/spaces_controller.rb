@@ -13,6 +13,7 @@ class SpacesController < ApplicationController
 
   def show
     @space = current_user.spaces.find_by(slug: params[:id])
+    @asset = @space.assets.new
     respond_with(@space)
   end
 
