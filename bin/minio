@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# docker pull minio/minio
+mkdir -p $HOME/docker/volumes/minio/store-pages/data
+docker run --rm -d --name minio-store-pages -p 9000:9000 \
+  -e "MINIO_ACCESS_KEY=minio-access-key" \
+  -e "MINIO_SECRET_KEY=minio-secret-key" \
+  -v $HOME/docker/volumes/minio/store-pages/data:/data \
+  -v $HOME/docker/volumes/minio/store-pages:/root/.minio \
+  minio/minio server /data

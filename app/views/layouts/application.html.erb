@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>AtplsShare</title>
+    <title>Antropoloops</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_pack_tag 'application' %>
   </head>
-
   <body>
+    <% if flash[:notice] %>
+      <div class="notification is-success is-radiusless">
+        <button class="delete"></button>
+        <%= notice %>
+      </div>
+    <% elsif flash[:alert] %>
+      <div class="notification is-warning is-radiusless">
+        <button class="delete"></button>
+        <%= alert %>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>

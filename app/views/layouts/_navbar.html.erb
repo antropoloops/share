@@ -1,0 +1,14 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="https://antropoloops.com">
+      Antropoloops
+    </a>
+  </div>
+  <div class="navbar-end">
+    <div class="navbar-item">
+      <% if current_user %>
+        <div><%= current_user.email%></div>
+      <% end %>
+    </div>
+  </div>
+</nav>

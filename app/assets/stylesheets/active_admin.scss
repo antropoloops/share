@@ -1,0 +1,7 @@
+// Active Admin's got SASS!
+@import "active_admin/mixins";
+// Active Admin's theme: Arctic Admin -- https://github.com/cprodhomme/arctic_admin
+@import "arctic_admin/base";
+
+// Overriding any non-variable SASS must be done after the fact.	// Overriding any non-variable SASS must be done after the fact.
+// For example, to change the default status-tag color:	// For example, to change the default status-tag color:

@@ -10,6 +10,18 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
  *= require_self
  */
+
+// $body-background-color: #2c2c2c;
+// $hr-background-color: #2c2c2c;
+// $content-heading-color: #ddd;
+// $link: #ddd;
+// $link-hover: white;
+// $body-color: white;
+// $title-color: #ddd;
+// $subtitle-color: #bbb;
+@import "./_variables";
+@import "bulma";
+@import "devise";
+@import "./_overrides";
