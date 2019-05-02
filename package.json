@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "start": "rails s",
+    "db:reset": "RAILS_ENV=development rake db:drop db:create db:migrate db:seed",
     "db:start": "docker run --rm --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data  postgres",
     "minio:start": "./bin/minio"
   },
@@ -10,6 +11,8 @@
     "@rails/webpacker": "^4.0.2"
   },
   "devDependencies": {
+    "form-data": "^2.3.3",
+    "node-fetch": "^2.5.0",
     "webpack-dev-server": "^3.3.1"
   }
 }

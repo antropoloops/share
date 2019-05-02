@@ -1,0 +1,12 @@
+<section class="section">
+  <div class="container">
+    <h1 class="title is-size-2">
+      <%= @audioset.name %>
+    </h1>
+    <div>
+    <% @audioset.clips.each do |clip| %>
+      <%= clip.name %>
+    <% end %>
+    </div>
+  </>
+</section>

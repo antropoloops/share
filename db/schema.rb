@@ -43,81 +43,89 @@ ActiveRecord::Schema.define(version: 2019_05_01_080307) do
   end
 
   create_table "assets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "space_id"
-    t.uuid "user_id"
+    t.string "name", null: false
+    t.string "slug", null: false
     t.text "description"
     t.jsonb "file_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["space_id"], name: "index_assets_on_space_id"
-    t.index ["user_id"], name: "index_assets_on_user_id"
   end
 
   create_table "audiosets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "slug", null: false
+    t.string "description"
     t.string "readme"
+    t.uuid "geomap_id"
     t.jsonb "logo_data"
+    t.jsonb "background_data"
+    t.string "display_mode"
+    t.float "bpm"
+    t.integer "quantize"
+    t.string "play_mode"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_audiosets_on_name", unique: true
+    t.index ["geomap_id"], name: "index_audiosets_on_geomap_id"
+    t.index ["slug"], name: "index_audiosets_on_slug", unique: true
   end
 
   create_table "clips", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "audioset_id"
-    t.string "name"
-    t.string "slug"
-    t.string "album"
-    t.string "year"
-    t.string "country"
-    t.string "color"
-    t.string "keyboard"
-    t.float "beats"
-    t.float "volume"
-    t.float "lng"
-    t.float "lat"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["audioset_id"], name: "index_clips_on_audioset_id"
-  end
-
-  create_table "memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "space_id"
-    t.uuid "user_id"
-    t.string "level", default: "read", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["space_id", "user_id"], name: "index_memberships_on_space_id_and_user_id", unique: true
-    t.index ["space_id"], name: "index_memberships_on_space_id"
-    t.index ["user_id"], name: "index_memberships_on_user_id"
-  end
-
-  create_table "spaces", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "track_id"
     t.string "name", null: false
     t.string "slug", null: false
+    t.jsonb "cover_data"
+    t.jsonb "audio_mp3_data"
+    t.jsonb "audio_wav_data"
     t.string "description"
-    t.jsonb "logo_data"
+    t.string "title"
+    t.string "album"
+    t.string "artist"
+    t.string "year"
+    t.string "country"
+    t.string "place"
+    t.string "readme"
+    t.float "xpos"
+    t.float "ypos"
+    t.string "color"
+    t.string "key"
+    t.float "beats"
+    t.float "volume"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["audioset_id", "slug"], name: "index_clips_on_audioset_id_and_slug", unique: true
+    t.index ["audioset_id"], name: "index_clips_on_audioset_id"
+    t.index ["track_id"], name: "index_clips_on_track_id"
   end
 
-  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "geomaps", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
-    t.string "locale", default: "en", null: false
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.string "slug", null: false
+    t.jsonb "map_data"
+    t.float "lambda"
+    t.float "vshift"
+    t.float "hshift"
+    t.float "scale"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "assets", "spaces"
-  add_foreign_key "assets", "users"
+  create_table "tracks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "audioset_id"
+    t.integer "position", default: 0, null: false
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.string "color"
+    t.float "volume"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["audioset_id", "position"], name: "index_tracks_on_audioset_id_and_position", unique: true
+    t.index ["audioset_id", "slug"], name: "index_tracks_on_audioset_id_and_slug", unique: true
+    t.index ["audioset_id"], name: "index_tracks_on_audioset_id"
+  end
+
+  add_foreign_key "audiosets", "geomaps"
   add_foreign_key "clips", "audiosets"
-  add_foreign_key "memberships", "spaces"
-  add_foreign_key "memberships", "users"
+  add_foreign_key "clips", "tracks"
+  add_foreign_key "tracks", "audiosets"
 end

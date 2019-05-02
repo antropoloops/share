@@ -1,10 +1,21 @@
 # frozen_string_literal: true
 
-class LogoUploader < Shrine
+class CoverUploader < Shrine
 
   plugin :processing
   plugin :versions
   plugin :validation_helpers
+  plugin :remote_url, max_size: 20 * 1024 * 1024
+
+  # def generate_location(_io, context)
+  #   clip = context[:record]
+  #   version = context[:version]
+  #   audioset = clip.audioset
+  #   ext = File.extname(context[:metadata]['filename'])
+  #   time = clip.updated_at.to_i
+
+  #   "#{audioset.slug}/covers/#{clip.slug}-#{version}#{time}#{ext}"
+  # end
 
   process(:store) do |io, _context|
     versions = { original: io }

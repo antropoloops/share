@@ -6,6 +6,7 @@ class Audioset < ApplicationRecord
   friendly_id :name, use: :slugged
 
   has_many :clips, dependent: :destroy
+  has_many :tracks, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
   include LogoUploader[:logo]

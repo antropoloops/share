@@ -3,71 +3,92 @@
 class CreateBasicStructure < ActiveRecord::Migration[5.2]
 
   def change
-    create_table :users, id: :uuid do |t|
-      t.string :name, null: false
-      t.string :locale, null: false, default: 'en'
-      t.string :email,              null: false, default: ''
-      t.string :encrypted_password, null: false, default: ''
-      t.string   :reset_password_token
-      t.datetime :reset_password_sent_at
-      t.datetime :remember_created_at
-      t.timestamps null: false
-    end
-
-    add_index :users, :email,                unique: true
-    add_index :users, :reset_password_token, unique: true
-
-    create_table :spaces, id: :uuid do |t|
+    create_table :assets, id: :uuid do |t|
       t.string :name, null: false, uniqueness: true
       t.string :slug, null: false, uniqueness: true
-      t.string :description
-      t.jsonb :logo_data
-
-      t.timestamps
-    end
-
-    create_table :memberships, id: :uuid do |t|
-      t.references :space, foreign_key: true, type: :uuid
-      t.references :user, foreign_key: true, type: :uuid
-      t.string :level, null: false, default: 'read'
-      t.timestamps
-    end
-    add_index :memberships, %i(space_id user_id), unique: true
-
-    create_table :assets, id: :uuid do |t|
-      t.references :space, foreign_key: true, type: :uuid
-      t.references :user, foreign_key: true, type: :uuid
       t.text :description
       t.jsonb :file_data
 
       t.timestamps
     end
 
+    create_table :geomaps, id: :uuid do |t|
+      t.string :name, null: false, uniqueness: true
+      t.string :slug, null: false, uniqueness: true
+      t.jsonb :map_data
+      t.float :lambda
+      t.float :vshift
+      t.float :hshift
+      t.float :scale
+      t.timestamps
+    end
+
     create_table :audiosets, id: :uuid do |t|
       t.string :name, null: false, uniqueness: true
       t.string :slug, null: false, uniqueness: true
+
+      # Meta
+      t.string :description
       t.string :readme
+
+      # Visuals
+      t.references :geomap, foreign_key: true, type: :uuid
       t.jsonb :logo_data
+      t.jsonb :background_data
+      t.string :display_mode
+
+      # Audio
+      t.float :bpm
+      t.integer :quantize
+      t.string :play_mode
 
       t.timestamps
     end
-    add_index :audiosets, :name, unique: true
+    add_index :audiosets, :slug, unique: true
+
+    create_table :tracks, id: :uuid do |t|
+      t.references :audioset, foreign_key: true, type: :uuid
+      t.integer :position, null: false, default: 0
+      t.string :name, null: false
+      t.string :slug, null: false
+      t.string :color
+      t.float :volume
+      t.timestamps
+    end
+    add_index :tracks, %i(audioset_id position), unique: true
+    add_index :tracks, %i(audioset_id slug), unique: true
 
     create_table :clips, id: :uuid do |t|
       t.references :audioset, foreign_key: true, type: :uuid
-      t.string :name
-      t.string :slug
+      t.references :track, foreign_key: true, type: :uuid
+      t.string :name, null: false
+      t.string :slug, null: false
+
+      t.jsonb :cover_data
+      t.jsonb :audio_mp3_data
+      t.jsonb :audio_wav_data
+
+      t.string :description
+      t.string :title
       t.string :album
+      t.string :artist
       t.string :year
       t.string :country
+      t.string :place
+      t.string :readme
+
+      # lng
+      t.float :xpos
+      # lat
+      t.float :ypos
+
       t.string :color
-      t.string :keyboard
+      t.string :key
       t.float :beats
       t.float :volume
-      t.float :lng
-      t.float :lat
       t.timestamps
     end
+    add_index :clips, %i(audioset_id slug), unique: true
   end
 
 end

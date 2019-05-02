@@ -1,18 +1,18 @@
 <section class="section">
   <div class="container">
     <div class="columns features">
-      <% @spaces.each do |space| %>
+      <% @audiosets.each do |audioset| %>
         <div class="column is-4">
           <article class="card">
             <div class="card-image">
               <figure class="image">
-                <%= image_tag space.logo_url(:small) if space.logo %>
+                <%= image_tag audioset.logo_url(:small) if audioset.logo %>
               </figure>
             </div>
             <div class="card-content">
               <div class="content">
-                <h2><%= link_to space.name, space %></h2>
-                <p><%= space.description %></p>
+                <h2><%= link_to audioset.name, audioset %></h2>
+                <p><%= audioset.description %></p>
               </div>
             </div>
           </article>

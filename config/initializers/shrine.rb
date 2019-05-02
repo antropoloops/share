@@ -8,7 +8,7 @@ Shrine.plugin :activerecord
 Shrine.plugin :determine_mime_type
 Shrine.plugin :cached_attachment_data
 Shrine.plugin :restore_cached_data
-Shrine.plugin :pretty_location
+# Shrine.plugin :pretty_location
 Shrine.plugin :backgrounding
 
 s3_config = {
@@ -41,6 +41,6 @@ else
   Shrine.storages = {
     # cache: Shrine::Storage::FileSystem.new('tmp', prefix: 'uploads/cache'),
     cache: Shrine::Storage::S3.new(prefix: 'cache', **s3_config),
-    store: Shrine::Storage::S3.new(s3_config)
+    store: Shrine::Storage::S3.new(prefix: 'files', **s3_config)
   }
 end
