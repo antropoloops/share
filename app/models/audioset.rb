@@ -3,7 +3,7 @@
 class Audioset < ApplicationRecord
 
   extend FriendlyId
-  friendly_id :name, use: :slugged
+  friendly_id :name, use: %i(slugged finders)
 
   has_many :clips, dependent: :destroy
   has_many :tracks, dependent: :destroy

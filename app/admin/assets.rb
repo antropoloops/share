@@ -5,7 +5,12 @@ ActiveAdmin.register Asset do
 
   index do
     column :name
-    column :file_data
+    column :file do |asset|
+      asset.file_url(public: true)
+    end
+    column :mime_type do |asset|
+      asset.file_data['metadata']['mime_type']
+    end
     column :description
     actions
   end
@@ -13,9 +18,10 @@ ActiveAdmin.register Asset do
   show do
     attributes_table do
       row :name
-      row :map do |asset|
+      row :file do |asset|
         link_to asset.file_url(public: true), asset.file_url(public: true)
       end
+      row :file_data
       row :description
     end
   end
@@ -23,8 +29,8 @@ ActiveAdmin.register Asset do
   form do |f|
     f.inputs do
       f.input :name
+      f.input :file, as: :file
       f.input :description
-      f.input :logo, as: :file
     end
     f.actions
   end

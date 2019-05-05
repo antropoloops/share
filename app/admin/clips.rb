@@ -1,14 +1,19 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Clip do
-  permit_params :audioset_id,
+  config.sort_order = 'created_at desc'
+  permit_params :audioset_id, :track_id,
                 :name, :title, :readme,
                 :cover, :audio,
                 :title, :artist, :year, :country,
-                :place, :xpos, :yposm,
+                :place, :xpos, :ypos,
                 :color, :key, :beats, :volume
 
   filter :audioset
+
+  belongs_to :audioset
+  controller do
+  end
 
   index do
     column :cover do |clip|
@@ -27,23 +32,27 @@ ActiveAdmin.register Clip do
   end
 
   show do
+    h3 do
+      link_to "👉 View all '#{clip.audioset.name}' clips",
+              admin_audioset_clips_path(clip.audioset)
+    end
     attributes_table do
       row :audioset
+      row :track
+      row :name
       row :slug
       row :image_url do |clip|
         clip.public_cover_url(:thumb) if clip.cover
       end
       row :audio_mp3_url do |clip|
-        link_to clip.public_audio_url(:mp3), clip.public_audio_url(:mp3)
+        clip.public_audio_url(:mp3) if clip.audio_mp3
       end
       row :audio_wav_url do |clip|
-        clip.public_audio_url(:wav)
+        clip.public_audio_url(:wav) if clip.audio_wav
       end
       row :image do |clip|
         image_tag(clip.cover_url(:small)) if clip.cover
       end
-    end
-    attributes_table_for clip do
       rows :title, :artist, :year, :country, :place, :xpos, :ypos
       rows :color, :key, :beats, :volume
     end
@@ -52,7 +61,7 @@ ActiveAdmin.register Clip do
   form do |f|
     f.inputs do
       inputs 'Clip' do
-        f.input :audioset
+        f.input :track, collection: clip.audioset.tracks
         f.input :name
         f.input :readme, as: :text
       end

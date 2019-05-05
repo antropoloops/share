@@ -2,14 +2,11 @@
 
 class Clip < ApplicationRecord
 
-  extend FriendlyId
-  friendly_id :name, use: :slugged
+  include HasNameSlugged
 
   belongs_to :audioset
   belongs_to :track
 
-  validates :audioset, presence: true
-  validates :track, presence: true
   validates :name, presence: true, uniqueness: { scope: :audioset }
 
   include CoverUploader[:cover]

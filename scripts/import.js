@@ -3,10 +3,13 @@ const NAMES = ["continentes", "lik03", "test"];
 const AUDIOSETS = NAMES.map(name =>
   require(`./import/data/${name}.audioset.json`)
 );
-const URL = "http://localhost:3000";
+const isProduction = false;
+const URL = isProduction
+  ? "https://atpls-share.herokuapp.com"
+  : "http://localhost:3000";
 
 const audiosetData = audioset => ({
-  name: audioset.meta.title + Date.now(),
+  name: audioset.meta.title + (isProduction ? "" : Date.now()),
   description: audioset.meta.description,
   readme: audioset.meta.readme
 });
@@ -34,10 +37,9 @@ const clipData = clip => ({
   volume: clip.audio.volume
 });
 
+const BASE_URL = "https://antropoloops.github.io/audiosets";
 const mediaUrl = (type, audioset, clip, extension) =>
-  `https://antropoloops.github.io/audiosets/${audioset.id}/${type}/${
-    clip.id
-  }.${extension}`;
+  `${BASE_URL}/${audioset.id}/${type}/${clip.id}.${extension}`;
 
 const mediaData = (audioset, clip) => ({
   cover_url: mediaUrl("covers", audioset, clip, "jpg"),

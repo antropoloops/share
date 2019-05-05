@@ -7,8 +7,10 @@ gem 'rails', '~> 5.2.0'
 gem 'pg', '~> 0.18'
 gem 'redis', '~> 4.0'
 
+gem 'acts_as_list'
 gem 'country_select', '~> 4.0'
 gem 'friendly_id'
+gem 'kramdown'
 gem 'rack-cors'
 gem 'responders'
 
