@@ -6,8 +6,7 @@ ActiveAdmin.register Audioset do
   config.sort_order = 'created_at desc'
   permit_params :name, :audioset_id, :description,
                 :readme, :logo, :background,
-                :geomap_url, :geomap_lambda, :geomap_vshift,
-                :geomap_hshift, :geomap_scale,
+                :geomap_url, :geomap_lambda, :geomap_vshift, :geomap_scale,
                 :display_mode, :bpm, :quantize, :play_mode
   config.batch_actions = true
 
@@ -32,6 +31,7 @@ ActiveAdmin.register Audioset do
 
   show do
     div do
+      div image_tag(audioset.public_logo_url(:small)) if audioset.logo
       h3 link_to('👉 Track list', admin_audioset_tracks_path(audioset.id))
       h3 link_to('👉 Clip list', admin_audioset_clips_path(audioset.id))
       h3 'Share urls'
@@ -52,7 +52,6 @@ ActiveAdmin.register Audioset do
       row :display_mode
       row :geomap_url
       row :geomap_lambda
-      row :geomap_hshift
       row :geomap_vshift
       row :geomap_scale
       row :play_mode
@@ -79,7 +78,7 @@ ActiveAdmin.register Audioset do
       inputs 'Visuals' do
         f.input :display_mode
         f.input :background, as: :file
-        f.inputs :geomap_url, :geomap_lambda, :geomap_hshift, :geomap_vshift, :geomap_scale
+        f.inputs :geomap_url, :geomap_lambda, :geomap_vshift, :geomap_scale
       end
       inputs 'Audio' do
         f.input :play_mode

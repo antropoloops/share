@@ -43,7 +43,6 @@ gem 'bootsnap'
 gem 'puma', '~> 3.11'
 
 gem 'sdoc', '~> 0.4.0', group: :doc
-gem 'sentry-raven'
 
 group :development do
   gem 'better_errors'

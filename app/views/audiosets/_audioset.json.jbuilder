@@ -5,8 +5,7 @@ json.id audioset.slug
 json.meta do
   json.title audioset.name
   json.description audioset.description
-  # FIXME: markdown
-  json.readme audioset.readme
+  json.readme Kramdown::Document.new(audioset.readme).to_html
 end
 
 json.audio do

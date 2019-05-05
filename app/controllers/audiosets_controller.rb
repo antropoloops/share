@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'kramdown'
+
 class AudiosetsController < ApplicationController
 
   respond_to :html, :json

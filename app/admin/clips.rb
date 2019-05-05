@@ -33,7 +33,11 @@ ActiveAdmin.register Clip do
 
   show do
     h3 do
-      link_to "👉 View all '#{clip.audioset.name}' clips",
+      link_to "👉 Go to '#{clip.audioset.name}'",
+              admin_audioset_path(clip.audioset)
+    end
+    h3 do
+      link_to "👉 Go to '#{clip.audioset.name}' clips",
               admin_audioset_clips_path(clip.audioset)
     end
     attributes_table do
