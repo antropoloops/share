@@ -9,6 +9,7 @@ gem 'redis', '~> 4.0'
 
 gem 'country_select', '~> 4.0'
 gem 'friendly_id'
+gem 'rack-cors'
 gem 'responders'
 
 gem 'activeadmin'
