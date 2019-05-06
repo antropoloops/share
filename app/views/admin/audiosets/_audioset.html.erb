@@ -1,0 +1,14 @@
+<div class="Audioset">
+  <%= link_to admin_audioset_path(audioset) do %>
+    <h3><%= audioset.name %></h3>
+    <p><%= audioset.description %></p>
+    <div>
+      <%= image_tag(audioset.public_logo_url(:small) ||
+    "https://placehold.co/400x400?text=#{audioset.slug}") %>
+    </div>
+  <% end %>
+  <p><%= link_to "Tracks: #{audioset.tracks.count}", admin_audioset_tracks_path(audioset) %></p>
+  <p><%= link_to "Clips: #{audioset.clips.count}", admin_audioset_clips_path(audioset) %></p>
+  <%= link_to 'Edit', edit_admin_audioset_path(audioset) %> |
+  <%= link_to 'Play!', player_url(audioset) %>
+</div>

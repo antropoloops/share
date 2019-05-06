@@ -2,6 +2,7 @@
 
 ActiveAdmin.register Clip do
   config.sort_order = 'created_at desc'
+  config.batch_actions = false
   permit_params :audioset_id, :track_id,
                 :name, :title, :readme,
                 :cover, :audio,
@@ -12,24 +13,26 @@ ActiveAdmin.register Clip do
   filter :audioset
 
   belongs_to :audioset
-  controller do
+
+  index as: :grid, columns: 6 do |clip|
+    render partial: 'clip', locals: { clip: clip }
   end
 
-  index do
-    column :cover do |clip|
-      image_tag(clip.public_cover_url(:thumb)) if clip.cover
-    end
-    column :audioset do |clip|
-      clip.audioset.name
-    end
-    column :track
-    column :slug
-    column :title
-    column :artist
-    column :year
-    column :country
-    actions
-  end
+  # index do
+  #   column :cover do |clip|
+  #     image_tag(clip.public_cover_url(:thumb)) if clip.cover
+  #   end
+  #   column :audioset do |clip|
+  #     clip.audioset.name
+  #   end
+  #   column :track
+  #   column :slug
+  #   column :title
+  #   column :artist
+  #   column :year
+  #   column :country
+  #   actions
+  # end
 
   show do
     h3 do

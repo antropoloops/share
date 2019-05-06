@@ -1,0 +1,10 @@
+<div class="Clip">
+  <%= link_to  admin_audioset_clip_path(clip.audioset, clip) do %>
+    <h3><%= clip.name %> [<%= clip.key %>]</h3>
+    <p><%= clip.title.truncate(20) %></p>
+    <div>
+      <%= image_tag(clip.public_cover_url(:thumb) || 'https://via.placeholder.com/100') %>
+    </div>
+  <% end %>
+  <%= link_to 'Edit', edit_admin_audioset_clip_path(clip.audioset, clip) %>
+</div>

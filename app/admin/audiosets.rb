@@ -4,30 +4,34 @@ require 'kramdown'
 
 ActiveAdmin.register Audioset do
   config.sort_order = 'created_at desc'
+  config.batch_actions = false
   permit_params :name, :audioset_id, :description,
                 :readme, :logo, :background,
                 :geomap_url, :geomap_lambda, :geomap_vshift, :geomap_scale,
                 :display_mode, :bpm, :quantize, :play_mode
-  config.batch_actions = true
 
-  index do
-    selectable_column
-    column :logo do |audioset|
-      image_tag audioset.logo_url(:thumb) if audioset.logo
-    end
-    column :name
-    column :description
-    column :clips do |audioset|
-      link_to audioset.clips.count, admin_audioset_clips_path(audioset)
-    end
-    column :tracks do |audioset|
-      link_to audioset.tracks.count, admin_audioset_tracks_path(audioset)
-    end
-    column :json do |audioset|
-      link_to 'View', audioset_path(audioset, format: :json)
-    end
-    actions
+  index as: :grid, columns: 2 do |audioset|
+    render partial: 'audioset', locals: { audioset: audioset }
   end
+
+  # index do
+  #   selectable_column
+  #   column :logo do |audioset|
+  #     image_tag audioset.logo_url(:thumb) if audioset.logo
+  #   end
+  #   column :name
+  #   column :description
+  #   column :clips do |audioset|
+  #     link_to audioset.clips.count, admin_audioset_clips_path(audioset)
+  #   end
+  #   column :tracks do |audioset|
+  #     link_to audioset.tracks.count, admin_audioset_tracks_path(audioset)
+  #   end
+  #   column :json do |audioset|
+  #     link_to 'View', audioset_path(audioset, format: :json)
+  #   end
+  #   actions
+  # end
 
   show do
     div do
