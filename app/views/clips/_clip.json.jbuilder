@@ -7,7 +7,7 @@ json.extract! clip, :title, :album, :artist, :country, :place, :year, :xpos, :yp
 json.extract! clip, :key, :color, :beats, :volume
 
 json.coverUrl clip.public_cover_url(:small)
-json.audioUrl clip.public_audio_url(:mp3)
+json.audioUrl clip.audio_wav ? clip.public_audio_url(:wav) : clip.public_audio_url(:mp3)
 json.resources do
   json.cover do
     json.small clip.public_cover_url(:small)

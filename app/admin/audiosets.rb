@@ -48,10 +48,12 @@ ActiveAdmin.register Audioset do
       row :name
       row :description
       row :logo do |audioset|
-        ul do
-          li image_tag(audioset.public_logo_url(:thumb))
-          li link_to "100x100: #{audioset.public_logo_url(:thumb)}", audioset.public_logo_url(:thumb)
-          li link_to "400x400: #{audioset.public_logo_url(:small)}", audioset.public_logo_url(:small)
+        if audioset.logo
+          ul do
+            li image_tag(audioset.public_logo_url(:thumb))
+            li link_to "100x100: #{audioset.public_logo_url(:thumb)}", audioset.public_logo_url(:thumb)
+            li link_to "400x400: #{audioset.public_logo_url(:small)}", audioset.public_logo_url(:small)
+          end
         end
       end
       row :display_mode

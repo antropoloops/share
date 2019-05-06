@@ -21,6 +21,8 @@ class ImportsController < ApplicationController
     clip = Clip.find(params[:clip_id])
     clip.cover_remote_url = params[:cover_url] if params[:cover_url].present?
     clip.audio_mp3_remote_url = params[:audio_mp3_url] if params[:audio_mp3_url].present?
+    clip.audio_mp3 = nil if params[:audio_mp3_destroy].present?
+    clip.audio_wav_remote_url = params[:audio_wav_url] if params[:audio_wav_url].present?
     clip.save
     render json: clip
   end
