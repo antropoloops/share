@@ -11,7 +11,7 @@ ActiveAdmin.setup do |config|
   config.footer = '_a_t_p_l_s_'
 
   config.comments = false
-  config.batch_actions = true
+  config.batch_actions = false
 
   # Artic theme configuration
   # https://github.com/cprodhomme/arctic_admin#installation

@@ -1,0 +1,10 @@
+<div class="Track">
+  <%= link_to  admin_audioset_track_path(track.audioset, track) do %>
+    <div style="width: 120px; height: 120px;
+      background-color: <%= track.color %>;
+      border: 10px solid <%= track.color %>;">
+      <h3><%= track.position %>: <%= track.name %></h3>
+    </div>
+  <% end %>
+  <%= link_to 'Edit', edit_admin_audioset_track_path(track.audioset, track) %>
+</div>

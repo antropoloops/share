@@ -35,24 +35,25 @@ ActiveAdmin.register Audioset do
 
   show do
     div do
-      div image_tag(audioset.public_logo_url(:small)) if audioset.logo
-      h3 link_to('👉 Track list', admin_audioset_tracks_path(audioset.id))
-      h3 link_to('👉 Clip list', admin_audioset_clips_path(audioset.id))
-      h3 'Share urls'
-      ul do
-        li { link_to audioset_url(audioset, format: :json), audioset_path(audioset, format: :json) }
-        li { link_to player_url(audioset), player_url(audioset) }
-      end
+      Kramdown::Document.new(audioset.readme).to_html.html_safe
+    end
+    div do
+      h3 link_to("Tracks: #{audioset.tracks.count}", admin_audioset_tracks_path(audioset.id))
+      h3 link_to("Clips: #{audioset.clips.count}", admin_audioset_clips_path(audioset.id))
+      h5 link_to player_url(audioset), player_url(audioset)
+      h5 link_to audioset_url(audioset, format: :json), audioset_url(audioset, format: :json)
     end
     attributes_table do
       row :id, &:slug
       row :name
       row :description
-      row :json do |audioset|
-        link_to audioset_url(audioset, format: :json), audioset_url(audioset, format: :json)
+      row :logo do |audioset|
+        ul do
+          li image_tag(audioset.public_logo_url(:thumb))
+          li link_to "100x100: #{audioset.public_logo_url(:thumb)}", audioset.public_logo_url(:thumb)
+          li link_to "400x400: #{audioset.public_logo_url(:small)}", audioset.public_logo_url(:small)
+        end
       end
-      row :logo_data
-      row :background_data
       row :display_mode
       row :geomap_url
       row :geomap_lambda
@@ -61,13 +62,8 @@ ActiveAdmin.register Audioset do
       row :play_mode
       row :bpm
       row :quantize
-      div do
-        h3 'README'
-        h2 audioset.name
-        div do
-          Kramdown::Document.new(audioset.readme).to_html.html_safe
-        end
-      end
+      row :logo_data
+      row :background_data
     end
   end
 

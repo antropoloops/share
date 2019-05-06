@@ -6,6 +6,10 @@ ActiveAdmin.register Track do
 
   belongs_to :audioset
 
+  index as: :grid, columns: 6 do |track|
+    render partial: 'track', locals: { track: track }
+  end
+
   form do |f|
     f.input :name
     f.input :color

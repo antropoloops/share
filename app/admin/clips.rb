@@ -18,50 +18,28 @@ ActiveAdmin.register Clip do
     render partial: 'clip', locals: { clip: clip }
   end
 
-  # index do
-  #   column :cover do |clip|
-  #     image_tag(clip.public_cover_url(:thumb)) if clip.cover
-  #   end
-  #   column :audioset do |clip|
-  #     clip.audioset.name
-  #   end
-  #   column :track
-  #   column :slug
-  #   column :title
-  #   column :artist
-  #   column :year
-  #   column :country
-  #   actions
-  # end
-
   show do
-    h3 do
-      link_to "👉 Go to '#{clip.audioset.name}'",
-              admin_audioset_path(clip.audioset)
-    end
-    h3 do
-      link_to "👉 Go to '#{clip.audioset.name}' clips",
-              admin_audioset_clips_path(clip.audioset)
+    div do
+      image_tag(clip.cover_url(:small)) if clip.cover
     end
     attributes_table do
       row :audioset
       row :track
       row :name
       row :slug
-      row :image_url do |clip|
-        clip.public_cover_url(:thumb) if clip.cover
-      end
       row :audio_mp3_url do |clip|
         clip.public_audio_url(:mp3) if clip.audio_mp3
       end
       row :audio_wav_url do |clip|
         clip.public_audio_url(:wav) if clip.audio_wav
       end
-      row :image do |clip|
-        image_tag(clip.cover_url(:small)) if clip.cover
+      row :cover do |clip|
+        clip.public_cover_url(:thumb) if clip.cover
       end
+    end
+    attributes_table do
       rows :title, :artist, :year, :country, :place, :xpos, :ypos
-      rows :color, :key, :beats, :volume
+      rows :key, :beats, :volume
     end
   end
 
@@ -71,6 +49,7 @@ ActiveAdmin.register Clip do
         f.input :track, collection: clip.audioset.tracks
         f.input :name
         f.input :readme, as: :text
+        f.input :key
       end
       inputs 'Media files' do
         f.input :cover, as: :file
@@ -84,9 +63,7 @@ ActiveAdmin.register Clip do
         f.input :xpos
         f.input :ypos
       end
-      inputs 'Meta' do
-        f.input :color, as: :string
-        f.input :key
+      inputs 'Audio' do
         f.input :beats
         f.input :volume
       end
