@@ -13,6 +13,7 @@ ActiveAdmin.register Track do
   form do |f|
     f.input :name
     f.input :color
+    f.input :position
     f.input :volume
     f.actions
   end

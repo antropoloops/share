@@ -8,6 +8,10 @@ json.meta do
   json.readme Kramdown::Document.new(audioset.readme).to_html
 end
 
+json.resources do
+  json.legacy true
+end
+
 json.audio do
   json.bpm audioset.bpm
   json.defaults do
