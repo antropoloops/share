@@ -10,28 +10,17 @@ ActiveAdmin.register Audioset do
                 :geomap_url, :geomap_lambda, :geomap_vshift, :geomap_scale,
                 :display_mode, :bpm, :quantize, :play_mode
 
+  action_item :tracks, only: :show do
+    link_to "Tracks: #{audioset.tracks.count}", admin_audioset_tracks_path(resource)
+  end
+
+  action_item :new_clip, only: :show do
+    link_to "Clips: #{audioset.clips.count}", admin_audioset_clips_path(resource)
+  end
+
   index as: :grid, columns: 2 do |audioset|
     render partial: 'audioset', locals: { audioset: audioset }
   end
-
-  # index do
-  #   selectable_column
-  #   column :logo do |audioset|
-  #     image_tag audioset.logo_url(:thumb) if audioset.logo
-  #   end
-  #   column :name
-  #   column :description
-  #   column :clips do |audioset|
-  #     link_to audioset.clips.count, admin_audioset_clips_path(audioset)
-  #   end
-  #   column :tracks do |audioset|
-  #     link_to audioset.tracks.count, admin_audioset_tracks_path(audioset)
-  #   end
-  #   column :json do |audioset|
-  #     link_to 'View', audioset_path(audioset, format: :json)
-  #   end
-  #   actions
-  # end
 
   show do
     div do

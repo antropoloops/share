@@ -5,7 +5,7 @@ ActiveAdmin.register Clip do
   config.batch_actions = false
   permit_params :audioset_id, :track_id,
                 :name, :title, :readme,
-                :cover, :audio,
+                :cover, :audio_mp3, :audio_wav,
                 :title, :artist, :year, :country,
                 :place, :xpos, :ypos,
                 :color, :key, :beats, :volume
@@ -41,6 +41,9 @@ ActiveAdmin.register Clip do
       rows :title, :artist, :year, :country, :place, :xpos, :ypos
       rows :key, :beats, :volume
     end
+    attributes_table do
+      rows :cover_data, :audio_mp3_data, :audio_wav_data
+    end
   end
 
   form do |f|
@@ -53,6 +56,8 @@ ActiveAdmin.register Clip do
       end
       inputs 'Media files' do
         f.input :cover, as: :file
+        f.input :audio_mp3, as: :file
+        f.input :audio_wav, as: :file
       end
       inputs 'Song information' do
         f.input :title
