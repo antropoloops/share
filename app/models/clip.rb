@@ -9,6 +9,7 @@
 # jsonb "cover_data"
 # jsonb "audio_mp3_data"
 # jsonb "audio_wav_data"
+# jsonb "audio_ogg_data"
 # string "description"
 # string "title"
 # string "album"
@@ -36,6 +37,7 @@ class Clip < ApplicationRecord
   include CoverUploader[:cover]
   include AudioUploader[:audio_mp3]
   include AudioUploader[:audio_wav]
+  include AudioUploader[:audio_ogg]
 
   def public_cover_url(version)
     cover_url(version, public: true)

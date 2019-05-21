@@ -6,7 +6,7 @@ class AudioUploader < Shrine
   plugin :remote_url, max_size: 20 * 1024 * 1024
 
   Attacher.validate do
-    validate_extension_inclusion %w[wav mp3]
+    validate_extension_inclusion %w[wav mp3 ogg]
   end
 
 end

@@ -17,6 +17,7 @@ json.resources do
   json.audio do
     json.mp3 clip.public_audio_url(:mp3)
     json.wav clip.public_audio_url(:wav)
+    json.ogg clip.public_audio_url(:ogg)
   end
 end
 

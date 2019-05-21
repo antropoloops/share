@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_05_210123) do
+ActiveRecord::Schema.define(version: 2019_05_21_233257) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 2019_05_05_210123) do
     t.float "volume"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "audio_ogg_data"
     t.index ["audioset_id", "slug"], name: "index_clips_on_audioset_id_and_slug", unique: true
     t.index ["audioset_id"], name: "index_clips_on_audioset_id"
     t.index ["track_id"], name: "index_clips_on_track_id"

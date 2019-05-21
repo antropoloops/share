@@ -5,7 +5,7 @@ ActiveAdmin.register Clip do
   config.batch_actions = false
   permit_params :audioset_id, :track_id,
                 :name, :title, :readme,
-                :cover, :audio_mp3, :audio_wav,
+                :cover, :audio_mp3, :audio_wav, :audio_ogg,
                 :title, :artist, :year, :country,
                 :place, :xpos, :ypos,
                 :color, :key, :beats, :volume
@@ -33,6 +33,9 @@ ActiveAdmin.register Clip do
       row :audio_wav_url do |clip|
         clip.public_audio_url(:wav) if clip.audio_wav
       end
+      row :audio_ogg_url do |clip|
+        clip.public_audio_url(:ogg) if clip.audio_ogg
+      end
       row :cover do |clip|
         clip.public_cover_url(:thumb) if clip.cover
       end
@@ -42,7 +45,7 @@ ActiveAdmin.register Clip do
       rows :key, :beats, :volume
     end
     attributes_table do
-      rows :cover_data, :audio_mp3_data, :audio_wav_data
+      rows :cover_data, :audio_mp3_data, :audio_wav_data, :audio_ogg_data
     end
   end
 
@@ -58,6 +61,7 @@ ActiveAdmin.register Clip do
         f.input :cover, as: :file
         f.input :audio_mp3, as: :file
         f.input :audio_wav, as: :file
+        f.input :audio_ogg, as: :file
       end
       inputs 'Song information' do
         f.input :title
