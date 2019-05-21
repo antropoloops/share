@@ -9,6 +9,7 @@ gem 'redis', '~> 4.0'
 
 gem 'acts_as_list'
 gem 'country_select', '~> 4.0'
+gem 'fastimage'
 gem 'friendly_id'
 gem 'kramdown'
 gem 'rack-cors'

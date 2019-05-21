@@ -18,7 +18,7 @@ ActiveAdmin.register Audioset do
     link_to "Clips: #{audioset.clips.count}", admin_audioset_clips_path(resource)
   end
 
-  index as: :grid, columns: 2 do |audioset|
+  index as: :grid, columns: 3 do |audioset|
     render partial: 'audioset', locals: { audioset: audioset }
   end
 
@@ -42,6 +42,17 @@ ActiveAdmin.register Audioset do
             li image_tag(audioset.public_logo_url(:thumb))
             li link_to "100x100: #{audioset.public_logo_url(:thumb)}", audioset.public_logo_url(:thumb)
             li link_to "400x400: #{audioset.public_logo_url(:small)}", audioset.public_logo_url(:small)
+            li link_to "Original: #{audioset.public_logo_url(:original)}", audioset.public_logo_url(:original)
+          end
+        end
+      end
+      row :background do |audioset|
+        if audioset.background
+          ul do
+            li link_to("Image: #{audioset.background_url(public: true)}",
+                       audioset.background_url(public: true))
+            li "Dimensions: #{audioset.background_data['metadata']['width']}x" \
+               "#{audioset.background_data['metadata']['height']}px"
           end
         end
       end

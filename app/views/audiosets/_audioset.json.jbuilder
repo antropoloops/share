@@ -24,6 +24,15 @@ end
 
 json.visuals do
   json.geoMapUrl audioset.geomap_url
+  json.background_image do
+    if audioset.background
+      json.url audioset.background_url(public: true)
+      json.width audioset.background_data['metadata']['width']
+      json.height audioset.background_data['metadata']['height']
+    else
+      json.url nil
+    end
+  end
   json.focus do
     json.lambda audioset.geomap_lambda
     json.verticalShift audioset.geomap_vshift

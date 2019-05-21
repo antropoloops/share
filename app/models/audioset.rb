@@ -10,6 +10,7 @@ class Audioset < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
   include LogoUploader[:logo]
+  include BackgroundUploader[:background]
 
   def public_logo_url(version)
     logo_url(version, public: true)

@@ -7,6 +7,7 @@ require 'shrine/storage/s3'
 Shrine.plugin :activerecord
 Shrine.plugin :determine_mime_type
 Shrine.plugin :cached_attachment_data
+Shrine.plugin :store_dimensions
 Shrine.plugin :restore_cached_data
 # Shrine.plugin :pretty_location
 Shrine.plugin :backgrounding
