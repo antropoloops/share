@@ -6,8 +6,8 @@ class AssetUploader < Shrine
 
   def generate_location(_io, context)
     asset = context[:record]
-    ext = File.extname(context[:metadata]['filename'])
-    "#{asset.slug}#{ext}"
+    # ext = File.extname(context[:metadata]['filename'])
+    asset.name
   end
 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_21_233257) do
+ActiveRecord::Schema.define(version: 2019_05_23_211829) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -112,6 +112,16 @@ ActiveRecord::Schema.define(version: 2019_05_21_233257) do
     t.float "vshift"
     t.float "hshift"
     t.float "scale"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "shares", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.uuid "previous_id"
+    t.string "content_type"
+    t.text "content"
+    t.boolean "published", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -2,6 +2,6 @@
 
 module ActiveAdmin::AdminHelper
   def player_url(audioset)
-    "https://play.antropoloops.com/test?url=#{audioset_url(audioset, format: :json)}"
+    "https://play.antropoloops.com/set?url=#{audioset_url(audioset, format: :json)}"
   end
 end

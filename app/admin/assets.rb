@@ -2,11 +2,12 @@
 
 ActiveAdmin.register Asset do
   permit_params :name, :file, :description
+  config.sort_order = 'created_at desc'
 
   index do
     column :name
     column :file do |asset|
-      asset.file_url(public: true)
+      link_to asset.name, asset.file_url(public: true)
     end
     column :mime_type do |asset|
       asset.file_data['metadata']['mime_type']

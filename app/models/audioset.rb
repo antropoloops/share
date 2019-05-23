@@ -1,5 +1,25 @@
 # frozen_string_literal: true
 
+##
+# == SCHEMA==
+# string "name", null: false
+# string "slug", null: false
+# string "description"
+# string "readme"
+# uuid "geomap_id"
+# jsonb "logo_data"
+# jsonb "background_data"
+# string "display_mode"
+# float "bpm"
+# integer "quantize"
+# string "play_mode"
+# datetime "created_at", null: false
+# datetime "updated_at", null: false
+# string "geomap_url"
+# float "geomap_lambda"
+# float "geomap_vshift"
+# float "geomap_hshift"
+# float "geomap_scale"
 class Audioset < ApplicationRecord
 
   extend FriendlyId

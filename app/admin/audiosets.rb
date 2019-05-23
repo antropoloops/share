@@ -27,15 +27,17 @@ ActiveAdmin.register Audioset do
       Kramdown::Document.new(audioset.readme).to_html.html_safe
     end
     div do
+      h1 "Audioset: #{audioset.slug}"
       h3 link_to("Tracks: #{audioset.tracks.count}", admin_audioset_tracks_path(audioset.id))
       h3 link_to("Clips: #{audioset.clips.count}", admin_audioset_clips_path(audioset.id))
       h5 link_to player_url(audioset), player_url(audioset)
       h5 link_to audioset_url(audioset, format: :json), audioset_url(audioset, format: :json)
     end
-    attributes_table do
+    attributes_table(title: 'Meta') do
       row :id, &:slug
       row :name
       row :description
+      row :readme, as: :text
       row :logo do |audioset|
         if audioset.logo
           ul do
@@ -46,6 +48,8 @@ ActiveAdmin.register Audioset do
           end
         end
       end
+    end
+    attributes_table(title: 'Visuals') do
       row :background do |audioset|
         if audioset.background
           ul do
@@ -61,9 +65,11 @@ ActiveAdmin.register Audioset do
       row :geomap_lambda
       row :geomap_vshift
       row :geomap_scale
-      row :play_mode
-      row :bpm
-      row :quantize
+    end
+    attributes_table(title: 'Audio') do
+      rows :play_mode, :bpm, :quantize
+    end
+    attributes_table(title: 'Files') do
       row :logo_data
       row :background_data
     end
@@ -78,8 +84,8 @@ ActiveAdmin.register Audioset do
         f.input :logo, as: :file
       end
       inputs 'Visuals' do
-        f.input :display_mode
         f.input :background, as: :file
+        f.input :display_mode
         f.inputs :geomap_url, :geomap_lambda, :geomap_vshift, :geomap_scale
       end
       inputs 'Audio' do
