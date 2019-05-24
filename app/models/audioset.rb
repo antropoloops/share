@@ -29,11 +29,25 @@ class Audioset < ApplicationRecord
   has_many :tracks, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
+  validates :publish_path, format: { with: %r{\A[-a-z0-9./]+\z}, message: 'Solo letras puntos y /' }
   include LogoUploader[:logo]
   include BackgroundUploader[:background]
 
   def public_logo_url(version)
     logo_url(version, public: true)
+  end
+
+  def publish
+    return unless publish_path
+
+    view_context_path = Rails.root.join('app', 'views')
+    view = ApplicationController.view_context_class.new(view_context_path)
+    content = JbuilderTemplate.new(view).encode do |json|
+      json.partial! 'audiosets/audioset', audioset: self
+    end
+    filename = "#{publish_path}.audioset.json"
+    share = Share.create(name: filename, content: content, content_type: 'application/json')
+    share&.publish
   end
 
 end

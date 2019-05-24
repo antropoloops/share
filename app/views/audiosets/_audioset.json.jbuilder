@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
+json.version '2.0.0'
+
 json.id audioset.slug
+json.last_updated_at audioset.updated_at.to_i
 
 json.meta do
   json.title audioset.name
@@ -39,3 +42,6 @@ json.visuals do
     json.scaleFactor audioset.geomap_scale
   end
 end
+
+json.tracks audioset.tracks.reorder(position: :asc), partial: 'tracks/track', as: :track
+json.clips audioset.clips, partial: 'clips/clip', as: :clip

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_23_211829) do
+ActiveRecord::Schema.define(version: 2019_05_24_083430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 2019_05_23_211829) do
     t.float "geomap_vshift"
     t.float "geomap_hshift"
     t.float "geomap_scale"
+    t.string "publish_path"
     t.index ["geomap_id"], name: "index_audiosets_on_geomap_id"
     t.index ["slug"], name: "index_audiosets_on_slug", unique: true
   end
