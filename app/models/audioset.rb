@@ -42,9 +42,15 @@ class Audioset < ApplicationRecord
     logo_url(version, public: true)
   end
 
+  def project?
+    audioset_type == 'project'
+  end
+
   def project_children
-    children.split("\n").map do |slug|
-      Audioset.find_by(slug: slug.strip)
+    return [] if children.blank?
+
+    children.split("\n").map do |path|
+      Audioset.find_by(publish_path: path.strip)
     end.compact
   end
 
@@ -57,7 +63,7 @@ class Audioset < ApplicationRecord
       json.partial! 'audiosets/audioset', audioset: self
     end
     filename = "#{publish_path}.audioset.json"
-    share = Share.create(name: filename, content: content, content_type: 'application/json')
+    share = Share.create(name: filename, content: content.to_json.to_s, content_type: 'application/json')
     share&.publish
   end
 

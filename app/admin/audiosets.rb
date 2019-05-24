@@ -27,7 +27,7 @@ ActiveAdmin.register Audioset do
     audioset = resource
     if audioset.publish_path.present?
       audioset.publish
-      notice = 'Audioset published!'
+      notice = "Audioset published! #{audioset.publish_path}"
     else
       notice = "Can't publish an audioset without publish path"
     end
@@ -77,12 +77,14 @@ ActiveAdmin.register Audioset do
         end
       end
     end
-    attributes_table(title: 'Project') do
-      row :children do |audioset|
-        ul do
-          audioset.project_children.map do |children|
-            li link_to(children.name, admin_audioset_path(children))
-          end.join(' ')
+    if audioset.project?
+      attributes_table(title: 'Project') do
+        row :children do |audioset|
+          ul do
+            audioset.project_children.map do |children|
+              li link_to(children.name, admin_audioset_path(children))
+            end.join(' ')
+          end
         end
       end
     end

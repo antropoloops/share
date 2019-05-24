@@ -12,7 +12,7 @@ json.meta do
   json.readme Kramdown::Document.new(audioset.readme).to_html
 end
 
-if audioset.audioset_type == 'project'
+if audioset.project?
   json.audiosets audioset.project_children do |audioset|
     json.id audioset.id
     json.title audioset.name
@@ -20,7 +20,7 @@ if audioset.audioset_type == 'project'
     json.description audioset.description
     json.logo audioset.public_logo_url(:small)
   end
-elsif audioset.audioset_type == 'audioset'
+else
   json.audio do
     json.bpm audioset.bpm
     json.defaults do
