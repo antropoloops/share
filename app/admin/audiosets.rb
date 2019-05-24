@@ -3,13 +3,14 @@
 require 'kramdown'
 
 ActiveAdmin.register Audioset do
+  # ==INDEX==
   config.sort_order = 'created_at desc'
   config.batch_actions = false
-  permit_params :name, :audioset_id, :description, :publish_path,
-                :readme, :logo, :background,
-                :geomap_url, :geomap_lambda, :geomap_vshift, :geomap_scale,
-                :display_mode, :bpm, :quantize, :play_mode
+  index as: :grid, columns: 6 do |audioset|
+    render partial: 'audioset', locals: { audioset: audioset }
+  end
 
+  # ==SHOW==
   action_item :tracks, only: :show do
     link_to "Tracks: #{audioset.tracks.count}", admin_audioset_tracks_path(resource)
   end
@@ -34,18 +35,20 @@ ActiveAdmin.register Audioset do
     redirect_to admin_audioset_path(audioset), notice: notice
   end
 
-  index as: :grid, columns: 3 do |audioset|
-    render partial: 'audioset', locals: { audioset: audioset }
-  end
-
   show do
     div do
       Kramdown::Document.new(audioset.readme).to_html.html_safe
     end
     div do
       h1 "Audioset: #{audioset.slug}"
-      h3 link_to("Tracks: #{audioset.tracks.count}", admin_audioset_tracks_path(audioset.id))
-      h3 link_to("Clips: #{audioset.clips.count}", admin_audioset_clips_path(audioset.id))
+      if audioset.audioset_type == 'project'
+        h3 'This audioset is a project! No tracks and no clips. Use children'
+      elsif audioset.audioset_type == 'page'
+        h3 'This audioset is a page! No tracks and no clips. Use readme'
+      else
+        h3 link_to("Tracks: #{audioset.tracks.count}", admin_audioset_tracks_path(audioset.id))
+        h3 link_to("Clips: #{audioset.clips.count}", admin_audioset_clips_path(audioset.id))
+      end
       h5 link_to "Test player: #{player_url(audioset)}", player_url(audioset)
       if audioset.publish_path.present?
         h5 link_to "Published at: #{player_path(audioset)}", player_path(audioset)
@@ -53,8 +56,12 @@ ActiveAdmin.register Audioset do
       h5 link_to "View data: #{audioset_url(audioset, format: :json)}",
                  audioset_url(audioset, format: :json)
     end
-    attributes_table(title: 'Meta') do
+    attributes_table(title: 'Audioset') do
       row :id, &:slug
+      row :audioset_type
+      row :parent
+    end
+    attributes_table(title: 'Meta') do
       row :publish_path
       row :name
       row :description
@@ -67,6 +74,15 @@ ActiveAdmin.register Audioset do
             li link_to "400x400: #{audioset.public_logo_url(:small)}", audioset.public_logo_url(:small)
             li link_to "Original: #{audioset.public_logo_url(:original)}", audioset.public_logo_url(:original)
           end
+        end
+      end
+    end
+    attributes_table(title: 'Project') do
+      row :children do |audioset|
+        ul do
+          audioset.project_children.map do |children|
+            li link_to(children.name, admin_audioset_path(children))
+          end.join(' ')
         end
       end
     end
@@ -96,13 +112,25 @@ ActiveAdmin.register Audioset do
     end
   end
 
+  # == FORM ==
+  permit_params :name, :audioset_id, :description,
+                :publish_path, :parent_id, :audioset_type, :children,
+                :readme, :logo, :background,
+                :geomap_url, :geomap_lambda, :geomap_vshift, :geomap_scale,
+                :display_mode, :bpm, :quantize, :play_mode
   form do |f|
     f.inputs do
-      f.inputs :name, :publish_path
+      f.input :name
+      f.input :audioset_type, collection: Audioset::TYPES, include_blank: false
+      f.input :parent_id, as: :select, collection: Audioset.where.not(id: audioset.id)
+      f.input :publish_path
       inputs 'Metadata' do
         f.input :description
         f.input :readme, as: :text
         f.input :logo, as: :file
+      end
+      inputs 'Project' do
+        f.input :children, as: :text
       end
       inputs 'Visuals' do
         f.input :background, as: :file

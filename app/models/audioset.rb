@@ -22,19 +22,30 @@
 # float "geomap_scale"
 class Audioset < ApplicationRecord
 
+  TYPES = %w[audioset project page].freeze
+
   extend FriendlyId
   friendly_id :name, use: %i(slugged finders)
 
   has_many :clips, dependent: :destroy
   has_many :tracks, dependent: :destroy
+  belongs_to :parent, class_name: 'Audioset', optional: true
 
   validates :name, presence: true, uniqueness: true
-  validates :publish_path, format: { with: %r{\A[-a-z0-9./]+\z}, message: 'Solo letras puntos y /' }
+  validates :publish_path, uniqueness: { allow_blank: true },
+                           format: { with: %r{\A[-a-z0-9./]*\z}, message: 'Solo letras puntos y /' }
+  validates :audioset_type, presence: true
   include LogoUploader[:logo]
   include BackgroundUploader[:background]
 
   def public_logo_url(version)
     logo_url(version, public: true)
+  end
+
+  def project_children
+    children.split("\n").map do |slug|
+      Audioset.find_by(slug: slug.strip)
+    end.compact
   end
 
   def publish
