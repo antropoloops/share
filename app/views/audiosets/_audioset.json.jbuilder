@@ -8,8 +8,10 @@ json.last_updated_at audioset.updated_at.to_i
 
 json.meta do
   json.title audioset.name
+  json.publish_path audioset.publish_path
   json.description audioset.description
   json.readme Kramdown::Document.new(audioset.readme).to_html
+  json.logo_url audioset.public_logo_url(:small)
 end
 
 if audioset.project?
@@ -18,7 +20,7 @@ if audioset.project?
     json.title audioset.name
     json.publish_path audioset.publish_path
     json.description audioset.description
-    json.logo audioset.public_logo_url(:small)
+    json.logo_url audioset.public_logo_url(:small)
   end
 else
   json.audio do
