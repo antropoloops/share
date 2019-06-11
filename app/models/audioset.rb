@@ -20,6 +20,8 @@
 # float "geomap_vshift"
 # float "geomap_hshift"
 # float "geomap_scale"
+# float "geomap_center_x"
+# float "geomap_center_y"
 class Audioset < ApplicationRecord
 
   TYPES = %w[audioset project page].freeze

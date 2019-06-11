@@ -104,6 +104,8 @@ ActiveAdmin.register Audioset do
       row :geomap_lambda
       row :geomap_vshift
       row :geomap_scale
+      row :geomap_center_x
+      row :geomap_center_y
     end
     attributes_table(title: 'Audio') do
       rows :play_mode, :bpm, :quantize
@@ -119,6 +121,7 @@ ActiveAdmin.register Audioset do
                 :publish_path, :parent_id, :audioset_type, :children,
                 :readme, :logo, :background,
                 :geomap_url, :geomap_lambda, :geomap_vshift, :geomap_scale,
+                :geomap_center_x, :geomap_center_y,
                 :display_mode, :bpm, :quantize, :play_mode
   form do |f|
     f.inputs do
@@ -137,7 +140,8 @@ ActiveAdmin.register Audioset do
       inputs 'Visuals' do
         f.input :background, as: :file
         f.input :display_mode
-        f.inputs :geomap_url, :geomap_lambda, :geomap_vshift, :geomap_scale
+        f.inputs :geomap_url, :geomap_lambda, :geomap_vshift,
+                 :geomap_scale, :geomap_center_x, :geomap_center_y
       end
       inputs 'Audio' do
         f.input :play_mode

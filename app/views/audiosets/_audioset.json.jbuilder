@@ -13,6 +13,7 @@ json.meta do
   json.description audioset.description
   json.readme Kramdown::Document.new(audioset.readme).to_html
   json.logo_url audioset.public_logo_url(:small)
+  # FIXME: remove
   json.background_image do
     if audioset.background
       json.url audioset.background_url(public: true)
@@ -44,7 +45,25 @@ else
   end
 
   json.visuals do
+    if audioset.background
+      json.image do
+        json.url audioset.background_url(public: true)
+        json.size do
+          json.width audioset.background_data['metadata']['width']
+          json.height audioset.background_data['metadata']['height']
+        end
+      end
+    end
+    json.geomap do
+      json.url audioset.geomap_url
+      json.scaleFactor audioset.geomap_scale
+      json.center do
+        json.x audioset.geomap_center_x
+        json.y audioset.geomap_center_y
+      end
+    end
     json.geoMapUrl audioset.geomap_url
+    # FIXME: remove (with migration)
     json.focus do
       json.lambda audioset.geomap_lambda
       json.verticalShift audioset.geomap_vshift
