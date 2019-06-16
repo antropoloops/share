@@ -139,7 +139,7 @@ ActiveAdmin.register Audioset do
       end
       inputs 'Visuals' do
         f.input :background, as: :file
-        f.input :display_mode
+        f.input :display_mode, collection: %i(map panel), include_blank: false
         f.inputs :geomap_url, :geomap_lambda, :geomap_vshift,
                  :geomap_scale, :geomap_center_x, :geomap_center_y
       end

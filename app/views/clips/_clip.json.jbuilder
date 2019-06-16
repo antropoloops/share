@@ -3,8 +3,13 @@
 json.id clip.slug
 json.trackId clip.track.slug
 json.trackNum clip.track.position
-json.extract! clip, :title, :album, :artist, :country, :place, :year, :xpos, :ypos
+json.position do
+  json.x clip.xpos
+  json.y clip.ypos
+end
+json.extract! clip, :title, :album, :artist, :country, :place, :year
 json.extract! clip, :key, :beats, :volume
+json.keyMap clip.key
 json.color clip.track.color
 
 json.coverUrl clip.public_cover_url(:small)
@@ -22,6 +27,7 @@ json.resources do
 end
 
 # compatibility legacy
+json.extract! clip, :xpos, :ypos
 json.lnglat [clip.xpos, clip.ypos]
 json.keyboard clip.key
 json.display do
