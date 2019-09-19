@@ -41,7 +41,8 @@ ActiveAdmin.register Clip do
       end
     end
     attributes_table do
-      rows :title, :artist, :year, :country, :place, :xpos, :ypos
+      rows :title, :artist, :album, :year, :country, :place, :readme
+      rows :xpos, :ypos
       rows :key, :beats, :volume
     end
     attributes_table do
@@ -66,6 +67,7 @@ ActiveAdmin.register Clip do
       inputs 'Song information' do
         f.input :title
         f.input :artist
+        f.input :album
         f.input :year
         f.input :country
         f.input :place
