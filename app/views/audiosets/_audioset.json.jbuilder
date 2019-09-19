@@ -22,6 +22,7 @@ if audioset.project?
     json.publish_path audioset.publish_path
     json.description audioset.description
     json.logo_url audioset.public_logo_url(:small)
+    json.background_url audioset.background_url(public: true)
   end
 else
   json.audio do
