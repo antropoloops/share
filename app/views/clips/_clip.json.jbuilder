@@ -13,6 +13,10 @@ json.color clip.track.color
 json.coverUrl clip.public_cover_url(:small)
 json.audioUrl clip.audio_wav ? clip.public_audio_url(:wav) : clip.public_audio_url(:mp3)
 json.resources do
+  json.cover2 do
+    json.small clip.public_cover2_url(:small)
+    json.thumb clip.public_cover2_url(:thumb)
+  end
   json.cover do
     json.small clip.public_cover_url(:small)
     json.thumb clip.public_cover_url(:thumb)

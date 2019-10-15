@@ -7,6 +7,7 @@
 # string "name", null: false
 # string "slug", null: false
 # jsonb "cover_data"
+# jsonb "cover2_data"
 # jsonb "audio_mp3_data"
 # jsonb "audio_wav_data"
 # jsonb "audio_ogg_data"
@@ -35,6 +36,7 @@ class Clip < ApplicationRecord
   validates :key, length: { maximum: 1 }, uniqueness: { scope: :audioset }
 
   include CoverUploader[:cover]
+  include CoverUploader[:cover2]
   include AudioUploader[:audio_mp3]
   include AudioUploader[:audio_wav]
   include AudioUploader[:audio_ogg]

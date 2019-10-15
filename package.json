@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start": "rails s",
-    "db:reset": "RAILS_ENV=development rake db:drop db:create db:migrate db:seed",
+    "db:reset": "RAILS_ENV=development rake db:drop db:create db:setup db:seed",
     "db:start": "docker run --rm --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data  postgres",
     "minio:start": "./bin/minio"
   },
