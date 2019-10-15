@@ -1,0 +1,30 @@
+{
+  "description": "Docker commands ",
+  "private": true,
+  "scripts": {
+    "start": "npm run docker:start",
+    "stop": "npm run docker:stop",
+    "logs": "npm run docker:logs",
+    "setup": "npm run docker:setup && npm run docker:start",
+    "docker:purge": "docker-compose down --volumes",
+    "docker:build": "docker-compose build",
+    "docker:start": "docker-compose up -d postgres redis minio ",
+    "docker:stop": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:setup": "docker-compose run --rm bash bin/setup",
+    "bash": "npm run bash:start",
+    "bash:start": "docker-compose run --rm bash",
+    "bash:ports": "docker-compose run --rm --service-ports bash",
+    "server": "npm run server:start",
+    "server:start": "docker-compose run --rm --use-aliases --service-ports rails",
+    "server:restart": "npm run spring:stop && npm run server:start",
+    "console": "npm run console:start",
+    "console:start": "docker-compose run --rm bash bundle exec rails console",
+    "test": "npm run test:start",
+    "test:start": "docker-compose run --rm test",
+    "test:bash": "docker-compose run --rm test /bin/bash",
+    "jobs": "npm run jobs:start",
+    "jobs:start": "docker-compose run --rm --service-ports sidekiq",
+    "spring:stop": "docker-compose run rails bundle exec spring stop"
+  }
+}
