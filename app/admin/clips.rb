@@ -39,6 +39,9 @@ ActiveAdmin.register Clip do
       row :cover do |clip|
         clip.public_cover_url(:thumb) if clip.cover
       end
+      row :cover2 do |clip|
+        clip.public_cover2_url(:thumb) if clip.cover2
+      end
     end
     attributes_table do
       rows :title, :artist, :album, :year, :country, :place, :readme
@@ -46,7 +49,7 @@ ActiveAdmin.register Clip do
       rows :key, :beats, :volume
     end
     attributes_table do
-      rows :cover_data, :audio_mp3_data, :audio_wav_data, :audio_ogg_data
+      rows :cover_data, :cover2_data, :audio_mp3_data, :audio_wav_data, :audio_ogg_data
     end
   end
 

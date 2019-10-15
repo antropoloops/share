@@ -45,6 +45,10 @@ class Clip < ApplicationRecord
     cover_url(version, public: true)
   end
 
+  def public_cover2_url(version)
+    cover2_url(version, public: true)
+  end
+
   def public_audio_url(version)
     public_send("audio_#{version}_url", public: true)
   end
