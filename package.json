@@ -2,15 +2,16 @@
   "name": "atpls-share",
   "private": true,
   "scripts": {
-    "start": "cd .dockerdev && npm run start",
+    "docker:start": "cd .dockerdev && npm run start",
+    "docker:stop": "cd .dockerdev && npm run stop",
     "server": "bundle exec rails server"
   },
   "dependencies": {
-    "@rails/webpacker": "^4.0.2"
+    "@rails/webpacker": "^4.2.0"
   },
   "devDependencies": {
-    "form-data": "^2.3.3",
-    "node-fetch": "^2.5.0",
-    "webpack-dev-server": "^3.3.1"
+    "form-data": "^2.5.1",
+    "node-fetch": "^2.6.0",
+    "webpack-dev-server": "^3.9.0"
   }
 }

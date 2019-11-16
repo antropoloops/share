@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 json.id clip.slug
+json.name clip.name
 json.trackId clip.track.slug
 json.trackNum clip.track.position
 json.position [clip.xpos, clip.ypos]
