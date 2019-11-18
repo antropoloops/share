@@ -10,6 +10,7 @@ module ActiveAdmin::AdminHelper
   end
 
   def staging_player_url(audioset)
-    "https://play-staging.antropoloops.com/test?url=#{audioset_url(audioset, format: :json)}"
+    url = audioset_url(audioset, format: :json, protocol: 'https://')
+    "https://play-staging.antropoloops.com/test?url=#{url}"
   end
 end
