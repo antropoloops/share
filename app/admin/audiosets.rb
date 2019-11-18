@@ -49,7 +49,7 @@ ActiveAdmin.register Audioset do
         h3 link_to("Tracks: #{audioset.tracks.count}", admin_audioset_tracks_path(audioset.id))
         h3 link_to("Clips: #{audioset.clips.count}", admin_audioset_clips_path(audioset.id))
       end
-      h5 link_to "Test player: #{player_url(audioset)}", player_url(audioset)
+      h5 link_to "Test player: #{staging_player_url(audioset)}", staging_player_url(audioset)
       if audioset.publish_path.present?
         h5 link_to "Published at: #{player_path(audioset)}", player_path(audioset)
       end
