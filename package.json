@@ -4,6 +4,8 @@
   "scripts": {
     "docker:start": "cd .dockerdev && npm run start",
     "docker:stop": "cd .dockerdev && npm run stop",
+    "docker:server": "cd .dockerdev && npm run server",
+    "docker:bash": "cd .dockerdev && npm run bash",
     "server": "bundle exec rails server"
   },
   "dependencies": {

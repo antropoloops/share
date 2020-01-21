@@ -1,10 +1,10 @@
-ARG RUBY_VERSION
+ARG RUBY_VERSION=2.6.1
 FROM ruby:$RUBY_VERSION
 
-ARG PG_MAJOR
-ARG NODE_MAJOR
-ARG BUNDLER_VERSION
-ARG YARN_VERSION
+ARG PG_MAJOR=11
+ARG NODE_MAJOR=10
+ARG BUNDLER_VERSION=1.17.2
+ARG YARN_VERSION=1.13.0
 
 # Add PostgreSQL to sources list
 RUN curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
@@ -21,14 +21,14 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 COPY ./Aptfile /tmp/Aptfile
 RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get -yq dist-upgrade && \
   DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
-    build-essential \
-    postgresql-client-$PG_MAJOR \
-    nodejs \
-    yarn=$YARN_VERSION-1 \
-    $(cat /tmp/Aptfile | xargs) && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    truncate -s 0 /var/log/*log
+  build-essential \
+  postgresql-client-$PG_MAJOR \
+  nodejs \
+  yarn=$YARN_VERSION-1 \
+  $(cat /tmp/Aptfile | xargs) && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+  truncate -s 0 /var/log/*log
 
 # Configure bundler and PATH
 ENV LANG=C.UTF-8 \
@@ -42,7 +42,7 @@ ENV PATH /app/bin:$BUNDLE_BIN:$PATH
 
 # Upgrade RubyGems and install required Bundler version
 RUN gem update --system && \
-    gem install bundler:$BUNDLER_VERSION
+  gem install bundler:$BUNDLER_VERSION
 
 # Create a directory for the app code
 RUN mkdir -p /app
