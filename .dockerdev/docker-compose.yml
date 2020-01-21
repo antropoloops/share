@@ -4,16 +4,10 @@ x-app: &app
   build:
     context: .
     dockerfile: ./Dockerfile
-    args:
-      RUBY_VERSION: '2.5.3'
-      PG_MAJOR: '11'
-      NODE_MAJOR: '11'
-      YARN_VERSION: '1.13.0'
-      BUNDLER_VERSION: '1.17.3'
   environment: &env
     NODE_ENV: development
     RAILS_ENV: ${RAILS_ENV:-development}
-  image: photo-booth-dev:1.0.11
+  image: share-1.0
   tmpfs:
     - /tmp
 
@@ -55,8 +49,6 @@ services:
   bash:
     <<: *backend
     command: /bin/bash
-    ports:
-      - '3000:3000' # rails server
 
   rails:
     <<: *backend
@@ -79,7 +71,7 @@ services:
     <<: *app
     command: ./bin/webpack-dev-server
     ports:
-      - '3035:3035'
+      - 3035
     volumes:
       - ..:/app:cached
       - bundle:/bundle
@@ -98,14 +90,14 @@ services:
     environment:
       PSQL_HISTFILE: /root/log/.psql_history
     ports:
-      - 5432:5432
+      - 5432
 
   redis:
     image: redis:3.2-alpine
     volumes:
       - redis:/data
     ports:
-      - 6379:6379
+      - 6379
 
   minio:
     image: minio/minio
