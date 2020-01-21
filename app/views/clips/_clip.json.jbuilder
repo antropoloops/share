@@ -6,7 +6,7 @@ json.trackId clip.track.slug
 json.trackNum clip.track.position
 json.position [clip.xpos, clip.ypos]
 json.extract! clip, :title, :album, :artist, :country, :place, :year
-json.readme clip.readme
+json.readme Kramdown::Document.new(clip.readme).to_html
 json.extract! clip, :key, :beats, :volume
 json.keyMap clip.key
 json.color clip.track.color
