@@ -13,6 +13,9 @@ Deployed at https://atpls-share.herokuapp.com
 
 ```
 git push heroku master
+
+# optional
+heroku run rake db:migrate
 ```
 
 ## Resources
