@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_15_153117) do
+ActiveRecord::Schema.define(version: 2020_02_26_234132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 2019_10_15_153117) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "role", default: "", null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
@@ -123,6 +124,15 @@ ActiveRecord::Schema.define(version: 2019_10_15_153117) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "permissions", force: :cascade do |t|
+    t.uuid "audioset_id"
+    t.bigint "admin_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_user_id"], name: "index_permissions_on_admin_user_id"
+    t.index ["audioset_id"], name: "index_permissions_on_audioset_id"
+  end
+
   create_table "shares", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.uuid "previous_id"
@@ -150,5 +160,7 @@ ActiveRecord::Schema.define(version: 2019_10_15_153117) do
   add_foreign_key "audiosets", "geomaps"
   add_foreign_key "clips", "audiosets"
   add_foreign_key "clips", "tracks"
+  add_foreign_key "permissions", "admin_users"
+  add_foreign_key "permissions", "audiosets"
   add_foreign_key "tracks", "audiosets"
 end

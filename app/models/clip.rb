@@ -33,7 +33,8 @@ class Clip < ApplicationRecord
   belongs_to :track
 
   validates :name, presence: true, uniqueness: { scope: :audioset }
-  validates :key, length: { maximum: 1 }, uniqueness: { scope: :audioset }
+  validates :key, length: { maximum: 1 }
+  validates :key, uniqueness: { scope: :audioset }, if: -> { key.present? }
 
   include CoverUploader[:cover]
   include CoverUploader[:cover2]

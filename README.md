@@ -5,7 +5,7 @@ Deployed at https://atpls-share.herokuapp.com
 ## Install and development
 
 - Clone this repo
-- Install dependencies: `npm i`
+- Install dependencies: `yarn`
 - Start docker: `npm run docker:start`
 - Start server: `npm run server`
 
@@ -18,7 +18,6 @@ git push heroku master
 ## Resources
 
 https://devcenter.heroku.com/articles/heroku-postgres-import-export
-
 
 ## License
 

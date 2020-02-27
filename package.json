@@ -2,6 +2,8 @@
   "name": "atpls-share",
   "private": true,
   "scripts": {
+    "setup": "echo 'run ./bin/setup inside docker:bash'",
+    "start": "npm run docker:server",
     "docker:start": "cd .dockerdev && npm run start",
     "docker:stop": "cd .dockerdev && npm run stop",
     "docker:server": "cd .dockerdev && npm run server",
