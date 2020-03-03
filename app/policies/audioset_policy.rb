@@ -21,6 +21,10 @@ class AudiosetPolicy < ApplicationPolicy
 
   end
 
+  def publish?
+    user.superadmin?
+  end
+
   def create?
     user.superadmin?
   end
