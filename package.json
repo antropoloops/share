@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "form-data": "^2.5.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "webpack-dev-server": "^3.9.0"
   }
 }
